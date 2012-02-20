@@ -26,6 +26,6 @@
     id paramBinds;
 }
 
-- (int)affectedRows;
+- (unsigned long long)affectedRows;
 
 @end

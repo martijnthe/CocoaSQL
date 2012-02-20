@@ -605,7 +605,7 @@
     return row;
 }
 
-- (int)affectedRows
+- (unsigned long long)affectedRows
 {
     return mysql_stmt_affected_rows(statement);
 }
