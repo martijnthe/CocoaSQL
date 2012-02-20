@@ -23,10 +23,12 @@
 
 @implementation CSQLResultCallback
 
-- (id)init
-{
-	rows = [NSMutableArray array];
-	return [super init];
+- (id)init {
+    self = [super init];
+    if (self) {
+        rows = [[NSMutableArray alloc] init];
+    }
+    return self;
 }
 
 - (void)dealloc
