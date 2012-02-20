@@ -211,7 +211,7 @@
                            receiver:callback
                             selector:@selector(rowsAsDictionaries:)
                               error:error];
-    NSMutableArray *rows = [callback rows];
+    NSMutableArray *rows = [[[callback rows] retain] autorelease];
 	[callback release];
     return success ? rows : nil;
 }
@@ -226,7 +226,7 @@
                            receiver:callback
 						   selector:@selector(rowsAsArrays:) 
                               error:error];
-    NSMutableArray *rows = [callback rows]; 
+    NSMutableArray *rows = [[[callback rows] retain] autorelease];
 	[callback release];
     return success ? rows : nil;
 }
