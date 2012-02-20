@@ -178,18 +178,24 @@
 		  rowAsDictionary:(BOOL)wantsDictionary
 					error:(NSError **)error
 {
-	if ([self executeWithValues:values error:nil]) {
+	if ([self executeWithValues:values error:error]) {
+        if (error != NULL && *error != nil) {
+            return NO;
+        }
 		if (receiver && selector) {
-			SEL fetchSelector;
-			if (wantsDictionary)
-				fetchSelector = @selector(fetchRowAsDictionary:);
-			else
-				fetchSelector = @selector(fetchRowAsArray:);
-			
-			NSDictionary *row;
-			while (row = [self performSelector:fetchSelector withObject:nil]) {
-				[receiver performSelector:selector withObject:row];
+            id row;
+			if (wantsDictionary) {
+                while ((row = [self fetchRowAsDictionary:error])) {
+                    [receiver performSelector:selector withObject:row];
+                }
+			} else {
+                while ((row = [self fetchRowAsArray:error])) {
+                    [receiver performSelector:selector withObject:row];
+                }
 			}
+            if (error != NULL && *error != nil) {
+                return NO;
+            }
 		}
 		return YES;
 	}
